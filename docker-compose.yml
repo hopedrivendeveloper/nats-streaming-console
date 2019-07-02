@@ -1,0 +1,20 @@
+version: '2'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: src/Dockerfile
+    links:
+      - nats
+    depends_on:
+      - nats  
+    environment:
+      - App__AppName=bukapor_nats
+      - NatsConnection__ConnectionUrl=nats://nats:4222
+      - NatsConnection__ClusterId=test-cluster
+  nats:
+    image: nats-streaming
+    ports:
+        - "4222:4222"
+        - "8222:8222"
+  
